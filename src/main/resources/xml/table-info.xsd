@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/object-config/" targetNamespace="http://www.example.org/object-config/">
+
+    <element name="TableInfoXml">
+        <complexType>
+            <sequence>
+                <element name="comments" type="string" maxOccurs="1"/>
+                <element name="tableInfo" type="tns:TableInfoType" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="TableInfoType">
+        <sequence>
+            <element name="tableType" type="string" />            
+            <element name="schemaName" type="string" />
+            <element name="tableName" type="string" />
+            <element name="remarks" type="string" />
+            <element name="column" type="string" maxOccurs="unbounded"/>
+            <element name="primaryKey" type="string" maxOccurs="unbounded" />
+            <element name="importedKeyList" type="tns:RelationMetadataType" maxOccurs="unbounded" />     
+            <element name="exportedKeyList" type="tns:RelationMetadataType" maxOccurs="unbounded" />
+            <element name="uniqueIndex" type="string" maxOccurs="unbounded" />
+        </sequence>
+        <attribute name="seqNo" type="long"/>
+    </complexType>
+
+    <complexType name="RelationMetadataType">
+        <sequence>
+            <!-- Lentele i kuria rodo FK -->
+            <element name="primarySchema" type="string"/>
+            <element name="primaryTable" type="string"/>
+            <element name="primaryColumn" type="string"/>
+            <!-- Lentele kurioje FK -->
+            <element name="foreignSchema" type="string"/>
+            <element name="foreignTable" type="string"/>
+            <element name="foreignColumn" type="string"/>
+        </sequence>
+    </complexType>
+
+</schema>
