@@ -7,12 +7,12 @@ import java.util.Set;
 public interface DBMetadataService {
 
     /**
-     * Pateikia sarasa stulpeliu pavadinimu pagal nurodyta schemaName ir tableName
+     * Pateikia stulpeliu informacija pagal nurodyta schemaName ir tableName
      * @param schemaName
      * @param tableName
      * @return
      */
-    public List<String> getDestDBTableColumns( String schemaName, String tableName );
+    public List<DBColumn> getDestDBTableColumns( String schemaName, String tableName );
 
     /**
      * 

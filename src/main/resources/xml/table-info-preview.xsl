@@ -51,7 +51,7 @@
 							</td>
 							<td>
                                 <xsl:for-each select="column">
-                                    <xsl:value-of select="text()"/>
+                                    <xsl:value-of select="name/text()"/>
                                     <xsl:text>, </xsl:text>
                                 </xsl:for-each>
 							</td>

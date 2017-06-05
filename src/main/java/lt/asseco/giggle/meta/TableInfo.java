@@ -15,7 +15,7 @@ public class TableInfo {
     private Set<String> primaryKeys = new HashSet<>();
     private Set<String> uniqueIndexes = new HashSet<>();
     
-    private List<String> columns = new LinkedList<>();
+    private List<DBColumn> columns = new LinkedList<>();
     
     private List<RelationMetadata> importedKeys = new LinkedList<>();
     private List<RelationMetadata> exportedKeys = new LinkedList<>();
@@ -72,11 +72,11 @@ public class TableInfo {
         this.exportedKeys = exportedKeys;
     }
 
-    public List<String> getColumns() {
+    public List<DBColumn> getColumns() {
         return columns;
     }
 
-    public void setColumns( List<String> columns ) {
+    public void setColumns( List<DBColumn> columns ) {
         this.columns = columns;
     }
 

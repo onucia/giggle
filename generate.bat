@@ -1,1 +1,1 @@
-java -jar target/giggle-0.0.1-SNAPSHOT.jar --schema=EKINAS --table=E65
+java -jar target/giggle-0.0.1-SNAPSHOT.jar --schema=avilys_et_ss

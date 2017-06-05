@@ -16,7 +16,7 @@
             <element name="schemaName" type="string" />
             <element name="tableName" type="string" />
             <element name="remarks" type="string" />
-            <element name="column" type="string" maxOccurs="unbounded"/>
+            <element name="column" type="tns:ColumnType" maxOccurs="unbounded"/>
             <element name="primaryKey" type="string" maxOccurs="unbounded" />
             <element name="importedKeyList" type="tns:RelationMetadataType" maxOccurs="unbounded" />     
             <element name="exportedKeyList" type="tns:RelationMetadataType" maxOccurs="unbounded" />
@@ -37,5 +37,15 @@
             <element name="foreignColumn" type="string"/>
         </sequence>
     </complexType>
+
+	<complexType name="ColumnType">
+        <sequence>
+            <element name="name" type="string"/>
+            <element name="type" type="string"/>
+            <element name="size" type="string"/>
+            <element name="nullable" type="string"/>
+            <element name="remarks" type="string"/>
+        </sequence>
+	</complexType>
 
 </schema>

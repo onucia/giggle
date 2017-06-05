@@ -22,9 +22,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import lt.asseco.giggle.gen.table_info.ColumnType;
 import lt.asseco.giggle.gen.table_info.RelationMetadataType;
 import lt.asseco.giggle.gen.table_info.TableInfoType;
 import lt.asseco.giggle.gen.table_info.TableInfoXml;
+import lt.asseco.giggle.meta.DBColumn;
 import lt.asseco.giggle.meta.RelationMetadata;
 import lt.asseco.giggle.meta.TableInfo;
 
@@ -40,7 +42,8 @@ public class TableInfoServiceImpl implements TableInfoService {
     @Value("${result.dir:c:/tmp}")
     private String resultDir;
     
-    private @Value("${result.xsltfile:classpath:xml/table-info-preview.xsl}") Resource xsltFile;
+//    private @Value("${result.xsltfile:classpath:xml/table-info-preview.xsl}") Resource xsltFile;
+    private @Value("${result.xsltfile:classpath:xml/table-info-preview-simple.xsl}") Resource xsltFile;
     
     /* (non-Javadoc)
      * @see lt.asseco.giggle.services.TableInfoServiceI#storeTableInfoList(java.util.List)
@@ -56,8 +59,9 @@ public class TableInfoServiceImpl implements TableInfoService {
             tiType.setTableType( ti.getTableType() );
             tiType.setRemarks( ti.getRemarks() );
             
-            for ( String column : ti.getColumns() ) {
-                tiType.getColumn().add( column );
+            for ( DBColumn column : ti.getColumns() ) {
+            	ColumnType colType = transformColumnType( column );
+                tiType.getColumn().add( colType );
             }
             
             for ( String pkName : ti.getPrimaryKeys() ) {
@@ -99,10 +103,23 @@ public class TableInfoServiceImpl implements TableInfoService {
         return rmType;
     }
     
+    private ColumnType transformColumnType( DBColumn column ) {
+    	ColumnType colType = new ColumnType();
+    	
+    	colType.setName( column.getName() );
+    	colType.setType( column.getType() );
+    	colType.setSize( column.getSize() );
+    	colType.setNullable( column.getNullable() );
+    	colType.setRemarks( column.getRemarks() );
+    	
+    	return colType;
+    }
+    
     
     private void storeToFile( String filePrefix, TableInfoXml xml )  {
         try {
             File file = new File(resultDir + File.separator + filePrefix + TABLE_INFO_FILE_NAME);
+            log.info( "Will store result to file: " + file.getAbsolutePath());
             JAXBContext jaxbContext = JAXBContext.newInstance(TableInfoXml.class);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

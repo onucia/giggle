@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import org.springframework.util.StringUtils;
 @Service
 @Transactional
 public class DBMetadataServiceImpl implements DBMetadataService {
+	
+	private static Log log = LogFactory.getLog(DBMetadataService.class);
 
     @Autowired
     private SqlSession sqlSession;
@@ -44,19 +48,26 @@ public class DBMetadataServiceImpl implements DBMetadataService {
     }
     
     @Override
-    public List<String> getDestDBTableColumns( String schemaName, String tableName ) {
-        List<String> columnNames = new LinkedList<String>();
+    public List<DBColumn> getDestDBTableColumns( String schemaName, String tableName ) {
+        List<DBColumn> columns = new LinkedList<>();
         try {
             ResultSet rs = getConnection().getMetaData().getColumns( null, schemaName, tableName, null );
+            DBColumn dbCol = new DBColumn();
             while( rs.next() ) {
-                columnNames.add( rs.getString( "COLUMN_NAME" ) );
+            	dbCol.setName( rs.getString( "COLUMN_NAME" ) );
+            	dbCol.setType( rs.getString( "TYPE_NAME" ));
+            	dbCol.setSize( rs.getString( "COLUMN_SIZE" ));
+            	dbCol.setNullable( rs.getString( "NULLABLE" ));
+            	dbCol.setRemarks( rs.getString( "REMARKS" ));
+            	
+            	columns.add( dbCol );
 //                System.out.printf( "[%d] %s: %s.%s | %s\n", i++, rs.getString( "TABLE_CAT"),  rs.getString( "TABLE_SCHEM"), rs.getString( "TABLE_NAME"), rs.getString( "COLUMN_NAME") );
             }
             rs.close();
         } catch ( SQLException e ) {
             throw new RuntimeException( String.format( "Klaida traukiant schemos '%s' lenteles '%s' stulpeliu pavadinimus", schemaName, tableName ) );
         }
-        return columnNames;
+        return columns;
     }
 
     @Override
@@ -155,7 +166,8 @@ public class DBMetadataServiceImpl implements DBMetadataService {
                 rs.close();
            
             } catch ( Exception e ) {
-                throw new RuntimeException(String.format("Klaida ieškant primaryKey schemoje '%s', lenteleje '%s'", schemaName, tableName));
+                //throw new RuntimeException(String.format("Klaida ieškant primaryKey schemoje '%s', lenteleje '%s'", schemaName, tableName));
+            	log.error(String.format("Klaida ieškant primaryKey schemoje '%s', lenteleje '%s'", schemaName, tableName));
             }
             tablePrimaryKeys.put( tableWithSchema, result );
         }
@@ -178,7 +190,8 @@ public class DBMetadataServiceImpl implements DBMetadataService {
                 rs.close();
            
             } catch ( Exception e ) {
-                throw new RuntimeException(String.format("Klaida ieškant primaryKey schemoje '%s', lenteleje '%s'", schemaName, tableName));
+                //throw new RuntimeException(String.format("Klaida ieškant unique index schemoje '%s', lenteleje '%s'", schemaName, tableName));
+            	log.error(String.format("Klaida ieškant unique index schemoje '%s', lenteleje '%s'", schemaName, tableName));
             }
             tableUniqueIndexes.put( tableWithSchema, result );
         }
@@ -196,7 +209,6 @@ public class DBMetadataServiceImpl implements DBMetadataService {
                 String tableName = rs.getString( "TABLE_NAME" );
                 String remarks = rs.getString( "REMARKS" );
                 result.add( new TableInfo( tableType, tableSchema, tableName, remarks ) );
-                
             }
             rs.close();
         } catch ( Exception e ) {
