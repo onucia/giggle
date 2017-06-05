@@ -52,8 +52,8 @@ public class DBMetadataServiceImpl implements DBMetadataService {
         List<DBColumn> columns = new LinkedList<>();
         try {
             ResultSet rs = getConnection().getMetaData().getColumns( null, schemaName, tableName, null );
-            DBColumn dbCol = new DBColumn();
             while( rs.next() ) {
+            	DBColumn dbCol = new DBColumn();
             	dbCol.setName( rs.getString( "COLUMN_NAME" ) );
             	dbCol.setType( rs.getString( "TYPE_NAME" ));
             	dbCol.setSize( rs.getString( "COLUMN_SIZE" ));
