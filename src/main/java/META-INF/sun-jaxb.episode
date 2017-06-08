@@ -10,19 +10,19 @@ Generated on: 2017.06.05 at 11:16:19 AM EEST
   -->
   <bindings scd="x-schema::tns" xmlns:tns="http://www.example.org/object-config/">
     <schemaBindings map="false">
-      <package name="lt.asseco.giggle.gen.table_info"/>
+      <package name="lt.once.giggle.gen.table_info"/>
     </schemaBindings>
     <bindings scd="tns:TableInfoXml">
-      <class ref="lt.asseco.giggle.gen.table_info.TableInfoXml"/>
+      <class ref="lt.once.giggle.gen.table_info.TableInfoXml"/>
     </bindings>
     <bindings scd="~tns:TableInfoType">
-      <class ref="lt.asseco.giggle.gen.table_info.TableInfoType"/>
+      <class ref="lt.once.giggle.gen.table_info.TableInfoType"/>
     </bindings>
     <bindings scd="~tns:RelationMetadataType">
-      <class ref="lt.asseco.giggle.gen.table_info.RelationMetadataType"/>
+      <class ref="lt.once.giggle.gen.table_info.RelationMetadataType"/>
     </bindings>
     <bindings scd="~tns:ColumnType">
-      <class ref="lt.asseco.giggle.gen.table_info.ColumnType"/>
+      <class ref="lt.once.giggle.gen.table_info.ColumnType"/>
     </bindings>
   </bindings>
 </bindings>

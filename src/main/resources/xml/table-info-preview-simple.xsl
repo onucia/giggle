@@ -25,8 +25,8 @@
                 <xsl:for-each select="ns2:TableInfoXml/tableInfo">
                 
                 <p>
-                    <div><xsl:value-of select="tableType" /><xsl:text> </xsl:text><xsl:value-of select="concat(schemaName, '.', tableName)"/> </div>
-                    <table border="1">
+                    <div><xsl:value-of select="tableType" /><xsl:text>   </xsl:text><xsl:value-of select="tableName"/> </div>
+                    <table border="1" width="100%">
 					<tr bgcolor="#E6E6FA">
 						<th>DB column</th>
                         <th>Column type</th>

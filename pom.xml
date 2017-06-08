@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>	
 	<artifactId>giggle</artifactId>
-	<groupId>lt.assseco</groupId>
+	<groupId>lt.onac</groupId>
 	<name>Giggle</name>
 	<description>Spring Boot XML Sample</description>
-	<version>0.0.1-SNAPSHOT</version>	
+	<version>0.0.2-SNAPSHOT</version>	
 <!-- 
 <parent>
     <groupId>org.springframework.boot</groupId>
@@ -165,7 +165,7 @@
                     <sources>
                         <source>src/main/resources/xml/table-info.xsd</source>
                     </sources> 
-                    <packageName>lt.asseco.giggle.gen.table_info</packageName>
+                    <packageName>lt.once.giggle.gen.table_info</packageName>
                     <outputDirectory>src/main/java</outputDirectory> 
                     <clearOutputDir>false</clearOutputDir>
                 </configuration>
